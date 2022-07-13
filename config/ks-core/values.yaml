@@ -127,6 +127,12 @@ console:
       cpu: 20m
       memory: 100Mi
 
+  ingress:
+    create: false
+    host: kubesphere.kuberntetes.srv
+    annotations: {}
+    #  external-dns.alpha.kubernetes.io/target: nginx.k8s
+
   extraVolumeMounts: []
   ## Additional volumeMounts to the console container.
   #  - name: example-config
@@ -155,4 +161,8 @@ controller:
   ## Additional volumes to the controller pod.
   #  - name: example-config
   #    emptyDir: {}
+  #
 
+# if prometheus rules for kubesphere should be installed
+prometheus:
+  enable: false
