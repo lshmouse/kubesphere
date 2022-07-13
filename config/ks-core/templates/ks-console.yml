@@ -106,3 +106,28 @@ spec:
     app: ks-console
     tier: frontend
   type: {{ .Values.console.type }}
+---
+{{- if .Values.console.ingress.create -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubesphere-ingress
+  namespace: kubesphere-system
+  {{- with .Values.console.ingress.annotations }}
+  annotations:
+  {{ toYaml . | indent 4 }}
+  {{- end }}
+spec:
+  rules:
+    - host: {{ .Values.console.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ks-console
+                port:
+                  number: 80
+  ingressClassName: nginx
+{{- end }}
